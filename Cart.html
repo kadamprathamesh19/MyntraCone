@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Myntra</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <div class="navbar" id="nav1">
+            <div class="nav-logo border">
+                <div class="logo">
+                    <img src="img/Myntra.png" style="height: 50px; background-size: cover; width: 100%;">
+                </div>
+            </div>
+
+            <div class="nav-address border">
+                <p class="add-fs">Deliver to</p>
+                <div class="nav-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <p class="add-sec">India</p>
+                </div>
+            </div>
+
+            <div class="nav-panel">
+                <div class="panel-ops">
+                    <a href="index.html"><p class="home border">Men</p></a>                                        
+                    <a href="index.html#shop-section"><p class="About border">Woman</p></a>
+                    <a href="index.html#shop-section"><p class="Contact border">Explore</p></a>
+                    <a href="index.html#shop-section"><p class="Explore border">Beauty</p></a>                                       
+                    <!-- <p class="Sign border">Sign-Up</p> -->
+                    <!-- <p class="Login border">Login</p> -->
+                </div>
+            </div>
+
+            <div class="nav-cart border">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="quantity">0</span>
+                cart
+            </div>
+        </div>
+    </header>
+
+
+    <!-- Hero Section -->
+
+
+
+    <!-- Shop Section -->
+    <div id="cart-shop-section">
+        <div class="cart-option">
+            <div class="cart-box">
+                <div class="cart-box-content">
+                    <h2>Sport Wear</h2>
+                    <div class="cart-box-img border" style="background-image: url('img/sports-wear.jpg');"></div>
+                    <h2>Rs.200</h2>
+                    <button onclick="addToCart('Soprt Wear', 200)"><b>Add to Cart</b></button>
+                </div>
+            </div>
+            <div class="cart-box">
+                <div class="cart-box-content">
+                    <h2>Western Wear</h2>
+                    <div class="cart-box-img border" style="background-image: url('img/Western_Wear.jpeg');"></div>
+                    <h2>Rs.900</h2>
+                    <button onclick="addToCart('Western Kurti', 900)"><b>Add to Cart</b></button>
+                </div>
+            </div>
+            <div class="cart-box">
+                <div class="cart-box-content">
+                    <h2>Kids</h2>
+                    <div class="cart-box-img border" style="background-image: url('img/Kids_Wear.jpg');"></div>
+                    <h2>Rs.800</h2>
+                    <button onclick="addToCart('Pampilon', 800)"><b>Add to Cart</b></button>
+                </div>
+            </div>
+            <div class="cart-box">
+                <div class="cart-box-content">
+                    <h2>Jewellary</h2>
+                    <div class="cart-box-img border" style="background-image: url('img/Jewellary.jpeg');"></div>
+                    <h2>Rs.1800</h2>
+                    <button onclick="addToCart('NeakLess', 1800)"><b>Add to Cart</b></button>
+                </div>
+            </div>
+            <div class="cart-box">
+                <div class="cart-box-content">
+                    <h2>Bags</h2>
+                    <div class="cart-box-img border" style="background-image: url('img/Bags.jpeg');"></div>
+                    <h2>Rs.800</h2>
+                    <button onclick="addToCart('Sky Bag', 800)"><b>Add to Cart</b></button>
+                </div>
+            </div>
+            <div class="cart-box">
+                <div class="cart-box-content">
+                    <h2>Flip Flip</h2>
+                    <div class="cart-box-img border" style="background-image: url('img/FlipFlop.jpeg');"></div>
+                    <h2>Rs.400</h2>
+                    <button onclick="addToCart('Flip Flop', 400)"><b>Add to Cart</b></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="cart-view">
+            <div class="cart-container" id="cart">
+                <h2>Cart</h2>
+                <!-- Cart items will be displayed here -->
+                <div id="cart-items"></div>
+                <p id="totalAmount">Total: Rs. 0</p>
+                <!-- Checkout button always visible -->
+                <button id="checkoutBtn" onclick="checkout()"><b>Checkout</b></button>
+            </div>
+        </div>
+    </div>
+    <!-- Shop Section End-->
+
+
+    <!-- Footer Section Start-->
+    <footer>
+
+        <div class="foot-panel1">
+            <a href="#nav1"><p class="foot-back border" style="color: white;">Back To Top</p></a>
+        </div>
+
+        <div class="copyright">
+            Copyright &copy; .Developed By Prathamesh Kadam.
+        </div>
+
+    </footer>
+    <!-- Footer Section End -->
+
+
+
+    <script>
+        let cartItems = [];
+
+        function addToCart(itemName, price) {
+            // Check if the item already exists in the cart
+            const existingItem = cartItems.find(item => item.name === itemName);
+            if (existingItem) {
+                // If the item exists, update the quantity and amount
+                existingItem.quantity++;
+                existingItem.amount += price;
+            } else {
+                // If the item doesn't exist, add it to the cart
+                cartItems.push({ name: itemName, price: price, quantity: 1, amount: price });
+            }
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartElement = document.getElementById('cart-items');
+            const totalElement = document.getElementById('totalAmount');
+            cartElement.innerHTML = '';
+            let totalAmount = 0;
+            cartItems.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('cart-item');
+                itemElement.innerHTML = `<p>${item.name} - Rs.${item.price} (Qty: ${item.quantity}, Amt: Rs.${item.amount})</p>`;
+                cartElement.appendChild(itemElement);
+                totalAmount += item.amount;
+            });
+            totalElement.textContent = `Total: Rs. ${totalAmount}`;
+
+            // Show checkout button
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            checkoutBtn.style.display = 'block';
+        }
+
+        function checkout() {
+            alert('Thank you. Your purchase is Done..!');
+            cartItems = [];
+            updateCart();
+        }
+    </script>
